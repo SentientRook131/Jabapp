@@ -1,2 +1,2 @@
 # Jabapp
-A Easy Language
+An Easy Language
