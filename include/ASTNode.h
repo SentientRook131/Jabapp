@@ -5,11 +5,14 @@ class ASTNode {
 	protected:
 	String ASTName = "ASTNode";
 	public:
-	virtual ~ASTNode() = default;
 	ASTNode() = default;
 	virtual String& getASTName() { return ASTName; }
 	virtual std::ostream& operator<<(std::ostream& os) { return os; }
 	virtual Object* evaluate() { return nullptr; }
+};
+class NullNode final : public ASTNode {
+public:
+	NullNode() = default;
 };
 class NumberNode final : public ASTNode {
 	long double value;

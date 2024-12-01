@@ -12,4 +12,6 @@ file(GLOB_RECURSE src
 
 add_executable(Jabapp
     ${src}
+        include/Parser.h
+        src/lib/Parser.cpp
 )
