@@ -1,6 +1,6 @@
-#include <runtime/object/Function.h>
-#include <runtime/usings.h>
-#include <interpret/parser/ASTNode.h>
+#include <Function.h>
+#include <usings.h>
+#include <ASTNode.h>
 class Scope;
 
 Function::Function(const Function& f) : name(f.name), parameters(f.parameters) {

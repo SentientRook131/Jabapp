@@ -1,4 +1,4 @@
-#include <runtime/Toolkit.hpp>
+#include <Toolkit.hpp>
 
 bool isExists(const String &original, const char target) {
 	for (const char i : original) {

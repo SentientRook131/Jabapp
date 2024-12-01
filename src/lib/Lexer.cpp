@@ -1,6 +1,6 @@
-#include <interpret/lexer/Lexer.h>
-#include <runtime/usings.h>
-#include <runtime/Toolkit.hpp>
+#include <Lexer.h>
+#include <usings.h>
+#include <Toolkit.hpp>
 
 char Lexer::currentChar() { return sourceCode[index]; }
 bool Lexer::isEnd() { return index >= sourceCode.length(); }

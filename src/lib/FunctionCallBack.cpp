@@ -1,3 +1,3 @@
-#include <runtime/object/FunctionCallBack.h>
+#include <FunctionCallBack.h>
 
 FunctionCallBack::FunctionCallBack() = default;

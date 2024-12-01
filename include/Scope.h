@@ -1,6 +1,6 @@
 #pragma once
-#include <../include/runtime/usings.h>
-#include <runtime/object/Variable.h>
+#include <usings.h>
+#include <Variable.h>
 
 class Function;
 

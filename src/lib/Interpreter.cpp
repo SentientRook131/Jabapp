@@ -1,7 +1,7 @@
-#include <interpret/Interpreter.h>
-#include <runtime/object/Function.h>
-#include <runtime/object/Variable.h>
-#include <interpret/parser/ASTNode.h>
+#include <Interpreter.h>
+#include <Function.h>
+#include <Variable.h>
+#include <ASTNode.h>
 
 Interpreter::Interpreter() { this->scope = new Scope(); }
 void Interpreter::interpret(ASTNode* node) {

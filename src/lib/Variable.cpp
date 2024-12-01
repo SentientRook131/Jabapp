@@ -1,5 +1,5 @@
-#include <runtime/object/Variable.h>
-#include <runtime/usings.h>
+#include <Variable.h>
+#include <usings.h>
 
 Variable::Variable(const String &name, const String &type, const Object &value) {
 	this->name = name;

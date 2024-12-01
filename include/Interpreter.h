@@ -1,7 +1,7 @@
 #pragma once
-#include <../include/runtime/usings.h>
-#include <interpret/parser/Scope.h>
-#include <interpret/parser/ASTNode.h>
+#include <usings.h>
+#include <Scope.h>
+#include <ASTNode.h>
 class Interpreter {
 	Scope* scope;
 	public:
