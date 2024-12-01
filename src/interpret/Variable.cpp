@@ -1,6 +1,7 @@
-#include "Variable.h"
+#include <runtime/object/Variable.h>
+#include <runtime/usings.h>
 
-Variable::Variable(String name, String type, Object value) {
+Variable::Variable(const String &name, const String &type, const Object &value) {
 	this->name = name;
 	this->type = type;
 	this->value = value;
@@ -14,4 +15,4 @@ String Variable::getType() {
 Object Variable::getValue() {
 	return value;
 }
-void Variable::setValue(Object value) { this->value = value; }
+void Variable::setValue(const Object &value) { this->value = value; }

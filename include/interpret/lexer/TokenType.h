@@ -7,9 +7,9 @@ enum TokenType {
 	SEPARATOR,
 	STRING,
 	COMMENT,
-	EOF__
+	EOF_
 };
-static inline std::ostream& operator<<(std::ostream& os, const TokenType& t) {
+static std::ostream& operator<<(std::ostream& os, const TokenType& t) {
 	switch (t) {
 		case IDENTIFIER: os << "IDENTIFIER"; break;
 		case KEYWORD: os << "KEYWORD"; break;
@@ -18,7 +18,7 @@ static inline std::ostream& operator<<(std::ostream& os, const TokenType& t) {
 		case SEPARATOR: os << "SEPARATOR"; break;
 		case STRING: os << "STRING"; break;
 		case COMMENT: os << "COMMENT"; break;
-		case EOF__: os << "EOF"; break;
+		case EOF_: os << "EOF"; break;
 	}
 	return os;
 }

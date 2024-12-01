@@ -1,14 +1,26 @@
-#include "Function.h"
+#include <runtime/object/Function.h>
+#include <runtime/usings.h>
+#include <interpret/parser/ASTNode.h>
+class Scope;
 
 Function::Function(const Function& f) : name(f.name), parameters(f.parameters) {
-	this->body = f.body;  // 为 body 指针创建新的 ASTNode 对象副本
-	this->callback = f.callback;  // 为 callback 指针创建新的 FunctionCallBack 对象副本
+	this->body = f.body;
+	this->callback = f.callback;
+	this->native = f.native;
 }
-Function::Function(String name, List<String> parameters, ASTNode* body, FunctionCallBack* callback) {
+Function::Function(const String &name, const List<String> &parameters, ASTNode* body) {
 	this->name = name;
 	this->parameters = parameters;
 	this->body = body;
+	this->callback = nullptr;
+	native = false;
+}
+Function::Function(const String &name, const List<String> &parameters, FunctionCallBack* callback) {
+	this->name = name;
+	this->parameters = parameters;
 	this->callback = callback;
+	this->body = nullptr;
+	native = true;
 }
 String Function::getName() {
 	return name;
@@ -16,18 +28,18 @@ String Function::getName() {
 List<String> Function::getParameters() {
 	return parameters;
 }
-ASTNode* Function::getBody() {
+ASTNode* Function::getBody() const {
 	return body;
 }
-Object Function::call(List<Object> arguments, Interpreter* interpreter) {
-	Scope* functionScope = new Scope(interpreter->getScope());
+Object Function::call(const List<Object> &arguments, Interpreter* interpreter) {
+	auto* functionScope = new Scope(interpreter->getScope());
 	for (int i = 0; i < parameters.size();i++) {
 		Object obj = parameters[i];
 		functionScope->defineVariable(std::any_cast<String>(obj), new Variable(std::any_cast<String>(obj), "unknown", arguments[i]));
 	}
-	if (callback != nullptr) return callback->execute(arguments);
+	if (native) return callback->execute(arguments);
 	return interpreter->evaluate(body);
 }
-Object Function::execute(List<Object> arguments) {
+Object Function::execute(const List<Object> &arguments) const {
 	return callback->execute(arguments);
 }

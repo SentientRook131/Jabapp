@@ -1,108 +1,99 @@
 #pragma once
-#include "usings.h"
+#include <../include/runtime/usings.h>
 #include <sstream>
 class ASTNode {
 	protected:
 	String ASTName = "ASTNode";
 	public:
+	virtual ~ASTNode() = default;
 	ASTNode() = default;
 	virtual String& getASTName() { return ASTName; }
-	virtual std::ostream& operator<<(const std::ostream& os) { }
-	virtual Object* evaluate() = 0;
+	virtual std::ostream& operator<<(std::ostream& os) { return os; }
+	virtual Object* evaluate() { return nullptr; }
 };
-class NumberNode : public ASTNode {
-	private:
+class NumberNode final : public ASTNode {
 	long double value;
 	public:
-	NumberNode(long double);
+	explicit NumberNode(long double);
 	long double* getValue();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class IdentifierNode : public ASTNode {
-	private:
+class IdentifierNode final : public ASTNode {
 	String name;
 	public:
-	IdentifierNode(String);
+	explicit IdentifierNode(const String &);
 	String getName();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class StringNode : public ASTNode {
-	private:
+class StringNode final : public ASTNode {
 	String value;
 	public:
-	StringNode(String);
+	explicit StringNode(const String &);
 	String* getValue();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class IfNode : public ASTNode {
-	private :
+class IfNode final : public ASTNode {
 	ASTNode* condition;
 	ASTNode* body;
 	List<ASTNode> branches;
 	public:
-	IfNode(ASTNode*, ASTNode*, List<ASTNode> branches = List<ASTNode>());
-	ASTNode* getCondition();
-	ASTNode* getBody();
+	IfNode(ASTNode*, ASTNode*, const List<ASTNode> &branches = List<ASTNode>());
+	[[nodiscard]] ASTNode* getCondition() const;
+	[[nodiscard]] ASTNode* getBody() const;
 	List<ASTNode> getBranches();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class ElseNode : public ASTNode {
-	private:
+class ElseNode final : public ASTNode {
 	ASTNode* body;
 	public:
-	ElseNode(ASTNode*);
-	ASTNode* getBody();
-	virtual Object* evaluate() override;
+	explicit ElseNode(ASTNode*);
+	[[nodiscard]] ASTNode* getBody() const;
+	Object* evaluate() override;
 };
-class BlockNode : public ASTNode {
-	private:
+class BlockNode final : public ASTNode {
 	List<ASTNode> statements;
 	public:
-	BlockNode(List<ASTNode>);
+	explicit BlockNode(const List<ASTNode> &);
 	List<ASTNode> getStatements();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class BinaryExpressionNode : public ASTNode {
-	private:
+class BinaryExpressionNode final : public ASTNode {
 	ASTNode* left;
-	String operator__;
+	String operator_;
 	ASTNode* right;
 	public:
-	BinaryExpressionNode(ASTNode*, String operator__, ASTNode* right);
-	ASTNode* getLeft();
+	BinaryExpressionNode(ASTNode*, const String &operator_, ASTNode* right);
+	[[nodiscard]] ASTNode* getLeft() const;
 	String getOperator();
-	ASTNode* getRight();
-	virtual Object* evaluate() override;
+	[[nodiscard]] ASTNode* getRight() const;
+	Object* evaluate() override;
 };
-class FunctionNode : public ASTNode {
-	private:
+class FunctionNode final : public ASTNode {
 	String functionName;
 	List<ASTNode> arguments;
 	public:
-	FunctionNode(String, List<ASTNode>);
+	FunctionNode(const String &, const List<ASTNode> &);
 	String getFunctionName();
 	List<ASTNode> getArguments();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class AssignmentNode : public ASTNode {
-	private:
+class AssignmentNode final : public ASTNode {
 	String variableName;
 	ASTNode* value;
 	public:
-	AssignmentNode(String, ASTNode*);
-	ASTNode* getValue();
+	AssignmentNode(const String &, ASTNode*);
+	[[nodiscard]] ASTNode* getValue() const;
 	String getVariableName();
-	virtual Object* evaluate() override;
+	Object* evaluate() override;
 };
-class VariableNode : public ASTNode {
-	private:
+class VariableNode final : public ASTNode {
 	String name;
 	String type;
 	Object* value;
 	public:
-	VariableNode(String, String, Object*);
+	VariableNode(const String &, const String &, Object*);
 	String getName();
 	String getType();
-	Object* getValue();
-	virtual Object* evaluate() override;
+	[[nodiscard]] Object* getValue() const;
+	Object* evaluate() override;
 };

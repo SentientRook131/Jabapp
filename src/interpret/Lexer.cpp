@@ -1,4 +1,7 @@
-#include "Lexer.h"
+#include <interpret/lexer/Lexer.h>
+#include <runtime/usings.h>
+#include <runtime/Toolkit.hpp>
+
 char Lexer::currentChar() { return sourceCode[index]; }
 bool Lexer::isEnd() { return index >= sourceCode.length(); }
 void Lexer::advance() {
@@ -12,15 +15,15 @@ void Lexer::advance() {
 }
 Token Lexer::readNumber() {
 	String number;
-	int startColumn = column;
+	const int startColumn = column;
 	while (!isEnd() && isExists(DIGITS, currentChar())) {
 		number += currentChar();
 		advance();
 	}
-	return Token(TokenType::NUMBER, number, line, startColumn);
+	return {TokenType::NUMBER, number, line, startColumn};
 }
-bool Lexer::isKeyword(String value) { return isExists<String>(keywords, value); }
-Token Lexer::readIdentitifierOrKeyword() {
+bool Lexer::isKeyword(const String &value) const { return isExists<String>(keywords, value); }
+Token Lexer::readIdentifierOrKeyword() {
 	String identifier;
 	int startColumn = column;
 	while (!isEnd() && isExists(IDENTIFIER_PART, currentChar())) {
@@ -28,11 +31,11 @@ Token Lexer::readIdentitifierOrKeyword() {
 		advance();
 	}
 	TokenType type = isKeyword(identifier) ? TokenType::KEYWORD : TokenType::IDENTIFIER;
-	return Token(type, identifier, line, startColumn);
+	return {type, identifier, line, startColumn};
 }
 Token Lexer::readString() {
 	String string;
-	int startColumn = column;
+	const int startColumn = column;
 	advance();
 	while (!isEnd() && currentChar() != '"') {
 		if (currentChar() == '\\') {
@@ -50,18 +53,18 @@ Token Lexer::readString() {
 	} else {
 		std::cerr << "Unexpected Error: Unterminated string literal at line " << line << ", column " << startColumn << "\n";
 	}
-	return Token(TokenType::STRING, string, line, startColumn);
+	return {TokenType::STRING, string, line, startColumn};
 }
 Token Lexer::readOperator() {
-	String operator__;
-	int startColumn = column;
+	String operator_;
+	const int startColumn = column;
 
 	while (!isEnd() && isExists(OPERATORS, currentChar())) {
-		operator__ += currentChar();
+		operator_ += currentChar();
 		advance();
 	}
 
-	return Token(TokenType::OPERATOR, operator__, line, startColumn);
+	return {TokenType::OPERATOR, operator_, line, startColumn};
 }
 List<Token> Lexer::tokenize() {
 	List<Token> tokens;
@@ -73,16 +76,16 @@ List<Token> Lexer::tokenize() {
 			tokens.push_back(readNumber());
 		} else if (isExists(IDENTIFIER_START, c)) {
 			//std::cout << "action riok\n";
-			tokens.push_back(readIdentitifierOrKeyword());
+			tokens.push_back(readIdentifierOrKeyword());
 		} else if (c == '"') {
 			tokens.push_back(readString());
 		} else if (isExists(OPERATORS, c)) {
 			tokens.push_back(readOperator());
 		} else if (isExists(SEPARATORS, c)) {
-			tokens.push_back(Token(TokenType::SEPARATOR, &c, line, column));
+			tokens.emplace_back(SEPARATOR, &c, line, column);
 			advance();
 		}
 	}
-	tokens.push_back(Token(TokenType::EOF__, "", line, column));
+	tokens.emplace_back(EOF_, "", line, column);
 	return tokens;
 }

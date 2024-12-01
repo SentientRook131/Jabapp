@@ -1,7 +1,8 @@
-#include "Toolkit.hpp"
-bool isExists(String original, char target) {
-	for (int i = 0; i < original.size(); i++) {
-		if (target == original[i]) return true;
+#include <runtime/Toolkit.hpp>
+
+bool isExists(const String &original, const char target) {
+	for (const char i : original) {
+		if (target == i) return true;
 	}
 	return false;
 }
