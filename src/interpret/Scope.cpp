@@ -1,7 +1,6 @@
 #include <interpret/parser/Scope.h>
 #include <runtime/usings.h>
 #include <runtime/object/Variable.h>
-#include <runtime/object/Function.h>
 Scope::Scope() { this->parentScope = standardScope; }
 Scope::Scope(Scope* parentScope) { this->parentScope = parentScope; }
 void Scope::defineVariable(const String& name, Variable* variable) {
