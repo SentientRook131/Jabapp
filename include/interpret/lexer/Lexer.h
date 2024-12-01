@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 #include <array>
-#include "usings.h"
+#include <../include/runtime/usings.h>
 #include "Token.h"
-#include "Toolkit.hpp"
+#include <../include/runtime/Toolkit.hpp>
 #include "TokenType.h"
 
 class Lexer {
@@ -23,7 +23,7 @@ class Lexer {
 	bool isEnd();
 	void advance();
 	Token readNumber();
-	bool isKeyword(String value);
+	bool isKeyword(const String &value) const;
 	Token readIdentitifierOrKeyword();
 	Token readString();
 	Token readOperator();

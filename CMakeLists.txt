@@ -14,14 +14,15 @@ file(GLOB_RECURSE runtime
     src/runtime/*.cpp
 )
 
-add_library(JabappRuntime SHARED
-    ${runtime}
-)
 
+
+add_library(JabappRuntime SHARED
+        ${runtime}
+)
 
 add_executable(Jabapp
     ${interpret_src}
 )
 target_link_libraries(Jabapp
-    PUBLIC JabappRuntime
+        PUBLIC JabappRuntime
 )

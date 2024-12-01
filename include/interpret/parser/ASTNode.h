@@ -1,5 +1,5 @@
 #pragma once
-#include "usings.h"
+#include <../include/runtime/usings.h>
 #include <sstream>
 class ASTNode {
 	protected:
@@ -7,8 +7,8 @@ class ASTNode {
 	public:
 	ASTNode() = default;
 	virtual String& getASTName() { return ASTName; }
-	virtual std::ostream& operator<<(const std::ostream& os) { }
-	virtual Object* evaluate() = 0;
+	virtual std::ostream& operator<<(std::ostream& os) { return os; }
+	virtual Object* evaluate() { return nullptr; }
 };
 class NumberNode : public ASTNode {
 	private:
@@ -22,7 +22,7 @@ class IdentifierNode : public ASTNode {
 	private:
 	String name;
 	public:
-	IdentifierNode(String);
+	IdentifierNode(const String &);
 	String getName();
 	virtual Object* evaluate() override;
 };
@@ -30,7 +30,7 @@ class StringNode : public ASTNode {
 	private:
 	String value;
 	public:
-	StringNode(String);
+	StringNode(const String &);
 	String* getValue();
 	virtual Object* evaluate() override;
 };
@@ -40,9 +40,9 @@ class IfNode : public ASTNode {
 	ASTNode* body;
 	List<ASTNode> branches;
 	public:
-	IfNode(ASTNode*, ASTNode*, List<ASTNode> branches = List<ASTNode>());
-	ASTNode* getCondition();
-	ASTNode* getBody();
+	IfNode(ASTNode*, ASTNode*, const List<ASTNode> &branches = List<ASTNode>());
+	ASTNode* getCondition() const;
+	ASTNode* getBody() const;
 	List<ASTNode> getBranches();
 	virtual Object* evaluate() override;
 };
@@ -51,14 +51,14 @@ class ElseNode : public ASTNode {
 	ASTNode* body;
 	public:
 	ElseNode(ASTNode*);
-	ASTNode* getBody();
+	ASTNode* getBody() const;
 	virtual Object* evaluate() override;
 };
 class BlockNode : public ASTNode {
 	private:
 	List<ASTNode> statements;
 	public:
-	BlockNode(List<ASTNode>);
+	BlockNode(const List<ASTNode> &);
 	List<ASTNode> getStatements();
 	virtual Object* evaluate() override;
 };
@@ -68,10 +68,10 @@ class BinaryExpressionNode : public ASTNode {
 	String operator__;
 	ASTNode* right;
 	public:
-	BinaryExpressionNode(ASTNode*, String operator__, ASTNode* right);
-	ASTNode* getLeft();
+	BinaryExpressionNode(ASTNode*, const String &operator__, ASTNode* right);
+	ASTNode* getLeft() const;
 	String getOperator();
-	ASTNode* getRight();
+	ASTNode* getRight() const;
 	virtual Object* evaluate() override;
 };
 class FunctionNode : public ASTNode {
@@ -79,7 +79,7 @@ class FunctionNode : public ASTNode {
 	String functionName;
 	List<ASTNode> arguments;
 	public:
-	FunctionNode(String, List<ASTNode>);
+	FunctionNode(const String &, const List<ASTNode> &);
 	String getFunctionName();
 	List<ASTNode> getArguments();
 	virtual Object* evaluate() override;
@@ -89,8 +89,8 @@ class AssignmentNode : public ASTNode {
 	String variableName;
 	ASTNode* value;
 	public:
-	AssignmentNode(String, ASTNode*);
-	ASTNode* getValue();
+	AssignmentNode(const String &, ASTNode*);
+	ASTNode* getValue() const;
 	String getVariableName();
 	virtual Object* evaluate() override;
 };
@@ -100,9 +100,9 @@ class VariableNode : public ASTNode {
 	String type;
 	Object* value;
 	public:
-	VariableNode(String, String, Object*);
+	VariableNode(const String &, const String &, Object*);
 	String getName();
 	String getType();
-	Object* getValue();
+	Object* getValue() const;
 	virtual Object* evaluate() override;
 };

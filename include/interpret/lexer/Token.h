@@ -1,6 +1,6 @@
 #pragma once
 #include "TokenType.h"
-#include "usings.h"
+#include <../include/runtime/usings.h>
 class Token {
 	private:
 	TokenType type;

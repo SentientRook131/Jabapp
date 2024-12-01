@@ -1,14 +1,14 @@
 #pragma once
-#include "usings.h"
+#include <../include/runtime/usings.h>
 class Variable {
 	private:
 	String name;
 	String type;
 	Object value;
 	public:
-	Variable(String, String, Object);
+	Variable(const String &, const String &, const Object &);
 	String getName();
 	String getType();
 	Object getValue();
-	void setValue(Object);
+	void setValue(const Object &);
 };

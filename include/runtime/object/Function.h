@@ -1,8 +1,8 @@
 #pragma once
-#include "usings.h"
-#include "ASTNode.h"
 #include "FunctionCallBack.h"
-#include "Interpreter.h"
+#include <interpret/parser/ASTNode.h>
+#include <optional>
+#include <interpret/Interpreter.h>
 
 class Function {
 	private:
@@ -10,13 +10,15 @@ class Function {
 	List<String> parameters;
 	ASTNode* body;
 	FunctionCallBack* callback;
+	bool native;
 	public:
 	Function() = default;
 	Function(const Function&);
-	Function(String, List<String>, ASTNode*, FunctionCallBack*);
+	Function(const String &, const List<String> &, ASTNode*);
+	Function(const String &, const List<String> &, FunctionCallBack*);
 	String getName();
 	List<String> getParameters();
-	ASTNode* getBody();
-	Object call(List<Object>, Interpreter*);
-	Object execute(List<Object>);
+	[[nodiscard]] ASTNode* getBody() const;
+	Object call(const List<Object> &, Interpreter*);
+	[[nodiscard]] Object execute(const List<Object> &) const;
 };

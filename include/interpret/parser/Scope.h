@@ -1,7 +1,8 @@
 #pragma once
-#include "usings.h"
-#include "Variable.h"
-#include "Function.h"
+#include <../include/runtime/usings.h>
+#include <runtime/object/Variable.h>
+
+class Function;
 
 class Scope {
 	private:
@@ -9,13 +10,13 @@ class Scope {
 	Map<String, Function*> functions;
 	Scope* parentScope;
 	public:
-	static Scope* standardScope;
+	static inline Scope* standardScope;
 	Scope();
 	Scope(Scope* parentScope);
-	void defineVariable(String name, Variable* var);
-	bool hasVariable(String name);
-	void defineFunction(String name, Function* func);
-	bool hasFunction(String name);
-	Variable* getVariable(String name);
-	Function* getFunction(String name);
+	void defineVariable(const String& name, Variable* var);
+	bool hasVariable(const String& name);
+	void defineFunction(const String& name, Function* func);
+	bool hasFunction(const String& name);
+	Variable* getVariable(const String& name);
+	Function* getFunction(const String& name);
 };
