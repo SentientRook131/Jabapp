@@ -3,11 +3,9 @@
 #include <array>
 #include <../include/runtime/usings.h>
 #include "Token.h"
-#include <../include/runtime/Toolkit.hpp>
-#include "TokenType.h"
+#include <utility>
 
 class Lexer {
-	private:
 	String sourceCode;
 	int index = 0;
 	int line = 1;
@@ -23,11 +21,11 @@ class Lexer {
 	bool isEnd();
 	void advance();
 	Token readNumber();
-	bool isKeyword(const String &value) const;
-	Token readIdentitifierOrKeyword();
+	[[nodiscard]] bool isKeyword(const String &value) const;
+	Token readIdentifierOrKeyword();
 	Token readString();
 	Token readOperator();
 	public:
-	Lexer(String sourceCode) : sourceCode(sourceCode) { }
+	explicit Lexer(String sourceCode) : sourceCode(std::move(sourceCode)) { }
 	List<Token> tokenize();
 };

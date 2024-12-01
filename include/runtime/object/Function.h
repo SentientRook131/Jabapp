@@ -8,9 +8,9 @@ class Function {
 	private:
 	String name;
 	List<String> parameters;
-	ASTNode* body;
-	FunctionCallBack* callback;
-	bool native;
+	ASTNode* body{};
+	FunctionCallBack* callback{};
+	bool native{};
 	public:
 	Function() = default;
 	Function(const Function&);

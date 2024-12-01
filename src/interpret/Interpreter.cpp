@@ -1,6 +1,7 @@
 #include <interpret/Interpreter.h>
 #include <runtime/object/Function.h>
 #include <runtime/object/Variable.h>
+#include <interpret/parser/ASTNode.h>
 
 Interpreter::Interpreter() { this->scope = new Scope(); }
 void Interpreter::interpret(ASTNode* node) {
@@ -12,7 +13,7 @@ Object Interpreter::evaluate(ASTNode* node) {
 	} else if (instanceof<StringNode, ASTNode>(node)) {
 		return dynamic_cast<StringNode *>(node)->getValue();
 	} else if (instanceof<IdentifierNode, ASTNode>(node)) {
-		String name = dynamic_cast<IdentifierNode *>(node)->getName();
+		const String name = dynamic_cast<IdentifierNode *>(node)->getName();
 		return scope->hasVariable(name) ? scope->getVariable(name)->getValue() : nullptr;
 	} else if (instanceof<FunctionNode, ASTNode>(node)) {
 		auto* n = dynamic_cast<FunctionNode *>(node);

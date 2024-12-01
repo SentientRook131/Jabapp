@@ -23,7 +23,7 @@ Token Lexer::readNumber() {
 	return {TokenType::NUMBER, number, line, startColumn};
 }
 bool Lexer::isKeyword(const String &value) const { return isExists<String>(keywords, value); }
-Token Lexer::readIdentitifierOrKeyword() {
+Token Lexer::readIdentifierOrKeyword() {
 	String identifier;
 	int startColumn = column;
 	while (!isEnd() && isExists(IDENTIFIER_PART, currentChar())) {
@@ -76,7 +76,7 @@ List<Token> Lexer::tokenize() {
 			tokens.push_back(readNumber());
 		} else if (isExists(IDENTIFIER_START, c)) {
 			//std::cout << "action riok\n";
-			tokens.push_back(readIdentitifierOrKeyword());
+			tokens.push_back(readIdentifierOrKeyword());
 		} else if (c == '"') {
 			tokens.push_back(readString());
 		} else if (isExists(OPERATORS, c)) {
@@ -86,6 +86,6 @@ List<Token> Lexer::tokenize() {
 			advance();
 		}
 	}
-	tokens.emplace_back(EOF__, "", line, column);
+	tokens.emplace_back(EOF_, "", line, column);
 	return tokens;
 }

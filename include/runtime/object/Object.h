@@ -19,12 +19,12 @@ namespace Jabapp::Object{
 
     template<typename T>
     struct BuiltInObject: Object {
-        const type_info& type;
+        const std::type_info& type;
         T value;
 
         BuiltInObject(T v):
             Object(Object::TypeTag::BUILTIN),
             type(type),
             value(std::move(v)) {}
-    }
+    };
 }

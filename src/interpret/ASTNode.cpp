@@ -1,6 +1,5 @@
 #include <memory>
 #include <runtime/usings.h>
-#include <interpret/lexer/Token.h>
 #include <interpret/parser/ASTNode.h>
 
 NumberNode::NumberNode(long double obj) {
@@ -10,7 +9,7 @@ NumberNode::NumberNode(long double obj) {
 }
 long double* NumberNode::getValue() { return &value; }
 Object* NumberNode::evaluate() { return new Object(value); }
-static inline std::ostream& operator<<(std::ostream& os, NumberNode& n) {
+static std::ostream& operator<<(std::ostream& os, NumberNode& n) {
 	os << "NumberNode{value='" << n.evaluate() << "'}";
 	return os;
 }
@@ -19,14 +18,14 @@ IdentifierNode::IdentifierNode(const String &name) {
 }
 String IdentifierNode::getName() { return name; }
 Object* IdentifierNode::evaluate() { return nullptr; }
-static inline std::ostream& operator<<(std::ostream& os, IdentifierNode& n) {
+static std::ostream& operator<<(std::ostream& os, IdentifierNode& n) {
 	os << "IdentifierNode{name='" << n.getName() << "'}";
 	return os;
 }
 StringNode::StringNode(const String &value) { this->value = value; }
 String* StringNode::getValue() { return &value; }
 Object* StringNode::evaluate() { return new Object(value); }
-static inline std::ostream& operator<<(std::ostream& os, StringNode& n) {
+static std::ostream& operator<<(std::ostream& os, StringNode& n) {
 	os << "StringNode{value='" << n.getValue() << "'}";
 	return os;
 }
@@ -52,39 +51,39 @@ static std::ostream& operator<<(std::ostream& os, ElseNode& n) {
 Object* ElseNode::evaluate() { return nullptr; }
 BlockNode::BlockNode(const List<ASTNode> &statements) { this->statements = statements; }
 List<ASTNode> BlockNode::getStatements() { return statements; }
-static inline std::ostream& operator<<(std::ostream& os, BlockNode& n) {
+static std::ostream& operator<<(std::ostream& os, BlockNode& n) {
 	os << "BlockNode{statements=" << n.getStatements() << "}";
 	return os;
 }
 Object* BlockNode::evaluate() { return nullptr; }
 BinaryExpressionNode::BinaryExpressionNode(ASTNode* left, const String &operator_, ASTNode* right) {
 	this->left = left;
-	this->operator__ = operator_;
+	this->operator_ = operator_;
 	this->right = right;
 }
 ASTNode* BinaryExpressionNode::getLeft() const { return left; }
-String BinaryExpressionNode::getOperator() { return operator__; }
+String BinaryExpressionNode::getOperator() { return operator_; }
 ASTNode* BinaryExpressionNode::getRight() const { return right; }
 Object* BinaryExpressionNode::evaluate() {
 	Object leftValue = left->evaluate();
 	Object rightValue = right->evaluate();
-	if (operator__ == "+") {
+	if (operator_ == "+") {
 		if (leftValue.type() == typeid(String) || rightValue.type() == typeid(String)) {
 			std::stringstream stream;
 			stream << leftValue << rightValue;
 			return new Object(stream.str());
 		}
 		return new Object(std::any_cast<long double>(leftValue) + std::any_cast<long double>(rightValue));
-	} else if (operator__ == "-") {
+	} else if (operator_ == "-") {
 		return new Object(std::any_cast<long double>(leftValue) - std::any_cast<long double>(rightValue));
-	} else if (operator__ == "*") {
+	} else if (operator_ == "*") {
 		return new Object(std::any_cast<long double>(leftValue) * std::any_cast<long double>(rightValue));
-	} else if (operator__ == "/") {
+	} else if (operator_ == "/") {
 		return new Object(std::any_cast<long double>(leftValue) / std::any_cast<long double>(rightValue));
 	}
 	return nullptr;
 }
-static inline std::ostream& operator<<(std::ostream& os, BinaryExpressionNode& n) {
+static std::ostream& operator<<(std::ostream& os, BinaryExpressionNode& n) {
 	os << "BinaryExpressionNode{left=" << n.getLeft() << ", operator=" << n.getOperator() << ", right=" << n.getRight() << "}";
 	return os;
 }
@@ -94,7 +93,7 @@ FunctionNode::FunctionNode(const String &functionName, const List<ASTNode> &argu
 }
 String FunctionNode::getFunctionName() { return functionName; }
 List<ASTNode> FunctionNode::getArguments() { return arguments; }
-static inline std::ostream& operator<<(std::ostream& os, FunctionNode& n) {
+static std::ostream& operator<<(std::ostream& os, FunctionNode& n) {
 	os << "FunctionNode{functionName='" << n.getFunctionName() << "', arguments=" << n.getArguments() << "}";
 	return os;
 }
@@ -105,7 +104,7 @@ AssignmentNode::AssignmentNode(const String &variableName, ASTNode* value) {
 }
 String AssignmentNode::getVariableName() { return variableName; }
 ASTNode* AssignmentNode::getValue() const { return value; }
-static inline std::ostream& operator<<(std::ostream& os, AssignmentNode& n) {
+static std::ostream& operator<<(std::ostream& os, AssignmentNode& n) {
 	os << "AssignmentNode{variableName='" << n.getVariableName() << "', value=" << n.getValue() << "}";
 	return os;
 }

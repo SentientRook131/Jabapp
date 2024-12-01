@@ -14,7 +14,7 @@ using List = std::vector<T>;
 using Object = std::any;
 template<typename K, typename V>
 using Map = std::map<K, V>;
-static inline std::ostream& operator<<(std::ostream& os, Object obj) {
+static std::ostream& operator<<(std::ostream& os, Object obj) {
 	if (obj.has_value()) {
 		if (obj.type() == typeid(int)) os << std::any_cast<int>(obj);
 		else if (obj.type() == typeid(float)) os << std::any_cast<float>(obj);
@@ -33,7 +33,7 @@ static inline std::ostream& operator<<(std::ostream& os, Object obj) {
 	}
 	return os;
 }
-static inline bool isNumberType(Object obj) {
+static bool isNumberType(const Object& obj) {
 	if (obj.type() == typeid(int)) return true;
 	else if (obj.type() == typeid(float)) return true;
 	else if (obj.type() == typeid(double)) return true;
@@ -51,6 +51,6 @@ static inline bool isNumberType(Object obj) {
 	return false;
 }
 template<typename T, typename B>
-static inline bool instanceof(B* b) {
+static bool instanceof(B* b) {
 	return dynamic_cast<B*>(b) != nullptr;
 }

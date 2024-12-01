@@ -5,18 +5,17 @@
 class Function;
 
 class Scope {
-	private:
 	Map<String, Variable*> variables;
 	Map<String, Function*> functions;
 	Scope* parentScope;
 	public:
 	static inline Scope* standardScope;
 	Scope();
-	Scope(Scope* parentScope);
+	explicit Scope(Scope* parentScope);
 	void defineVariable(const String& name, Variable* var);
-	bool hasVariable(const String& name);
+	bool hasVariable(const String& name) const;
 	void defineFunction(const String& name, Function* func);
-	bool hasFunction(const String& name);
+	bool hasFunction(const String& name) const;
 	Variable* getVariable(const String& name);
 	Function* getFunction(const String& name);
 };

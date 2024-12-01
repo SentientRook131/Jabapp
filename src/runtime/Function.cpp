@@ -1,9 +1,10 @@
 #include <runtime/object/Function.h>
 #include <runtime/usings.h>
 #include <interpret/parser/ASTNode.h>
-#include <interpret/Interpreter.h>
-#include <interpret/parser/Scope.h>
-#include <runtime/object/Variable.h>
+#include "../interpret/Scope.cpp"
+#include "../interpret/Variable.cpp"
+#include "../interpret/Interpreter.cpp"
+class Scope;
 
 Function::Function(const Function& f) : name(f.name), parameters(f.parameters) {
 	this->body = f.body;

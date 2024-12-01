@@ -1,7 +1,6 @@
 #pragma once
 #include <../include/runtime/usings.h>
 class Variable {
-	private:
 	String name;
 	String type;
 	Object value;

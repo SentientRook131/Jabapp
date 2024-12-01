@@ -3,7 +3,6 @@
 #include <interpret/parser/Scope.h>
 #include <interpret/parser/ASTNode.h>
 class Interpreter {
-	private:
 	Scope* scope;
 	public:
 	Interpreter();
