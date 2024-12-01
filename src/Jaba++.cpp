@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/interpret/lexer/Lexer.h"
+#include "Lexer.h"
 int main() {
 	Lexer lexer("int x = 10;");
 	List<Token> tokens = lexer.tokenize();

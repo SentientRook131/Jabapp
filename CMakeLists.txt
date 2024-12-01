@@ -1,28 +1,15 @@
 cmake_minimum_required(VERSION 3.24)
 project(Jabapp CXX)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 include_directories(
     include
 )
 
-file(GLOB_RECURSE interpret_src
-    src/interpret/*.cpp
-)
-
-file(GLOB_RECURSE runtime
-    src/runtime/*.cpp
-)
-
-
-
-add_library(JabappRuntime SHARED
-        ${runtime}
+file(GLOB_RECURSE src
+    src/*.cpp
 )
 
 add_executable(Jabapp
-    ${interpret_src}
-)
-target_link_libraries(Jabapp
-        PUBLIC JabappRuntime
+    ${src}
 )

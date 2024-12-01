@@ -1,5 +1,5 @@
 #pragma once
-#include <../include/runtime/usings.h>
+#include <usings.h>
 class Variable {
 	String name;
 	String type;

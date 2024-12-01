@@ -1,6 +1,6 @@
 #pragma once
 #include "TokenType.h"
-#include <../include/runtime/usings.h>
+#include <usings.h>
 
 #include <utility>
 class Token {

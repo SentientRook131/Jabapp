@@ -1,6 +1,6 @@
 #include <memory>
-#include <runtime/usings.h>
-#include <interpret/parser/ASTNode.h>
+#include <usings.h>
+#include <ASTNode.h>
 
 NumberNode::NumberNode(long double obj) {
 	if (isNumberType(obj)) {

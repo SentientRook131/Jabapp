@@ -1,8 +1,7 @@
 #pragma once
 #include "FunctionCallBack.h"
-#include <interpret/parser/ASTNode.h>
-#include <optional>
-#include <interpret/Interpreter.h>
+#include <ASTNode.h>
+#include <Interpreter.h>
 
 class Function {
 	private:
