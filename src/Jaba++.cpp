@@ -4,7 +4,7 @@
 #include "Parser.h"
 
 int main() {
-	Lexer lexer("int x = 10;");
+	Lexer lexer("int x = 10\nprint(x)");
 	List<Token> tokens = lexer.tokenize();
 	Parser parser(tokens);
 	for (Token token : tokens) {

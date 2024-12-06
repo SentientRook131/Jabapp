@@ -11,7 +11,7 @@ class Parser {
     List<Token> tokens;
     List<String> keywords = {"int", "short", "long", "float", "double", "bool", "char"};
     int current = 0;
-    ASTNode null();
+    ASTNode null;
 public:
     explicit Parser(const List<Token>& tokens);
     [[nodiscard]] ASTNode parse();

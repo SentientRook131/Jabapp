@@ -42,6 +42,24 @@ ASTNode Parser::parseStatement() {
     throw "Unexpected statement:" + std::to_string(peek().getLineNumber()) + ";" + std::to_string(peek().getColumnNumber());
 }
 
+ASTNode Parser::parseBlock() {
+    consume(SEPARATOR);
+    List<ASTNode> statements;
+    while (!isAtEnd()) {
+        if (check(SEPARATOR) && peek().getValue() == "}") {
+            break;
+        }
+        ASTNode statement = parseStatement();
+        if (&statement != nullptr) {
+            statements.push_back(statement);
+        }
+        if (!isAtEnd() && check(SEPARATOR) && peek().getValue() == ";") {
+            consume(SEPARATOR);
+        }
+    }
+    return static_cast<ASTNode>(BlockNode(statements));
+}
+
 ASTNode Parser::parseIfStatement(bool expectElse) {
     consume(KEYWORD);
     consume(SEPARATOR);
